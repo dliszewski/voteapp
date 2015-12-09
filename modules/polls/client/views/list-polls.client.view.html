@@ -1,0 +1,20 @@
+<section ng-controller="PollsController" ng-init="find()">
+  <div class="page-header">
+    <h1>Polls</h1>
+  </div>
+  <div class="list-group">
+    <a ng-repeat="poll in polls" ui-sref="polls.view({pollId: poll._id})" class="list-group-item">
+      <small class="list-group-item-text">
+        Posted on
+        <span ng-bind="poll.created | date:'mediumDate'"></span>
+        by
+        <span ng-bind="poll.user.displayName"></span>
+      </small>
+      <h4 class="list-group-item-heading" ng-bind="poll.title"></h4>
+      <div ng-repeat="typ in poll.options"><h4>Propozycja {{typ.name}} - {{typ.votes}}</h4></div>
+    </a>
+  </div>
+  <div class="alert alert-warning text-center" ng-if="polls.$resolved && !polls.length">
+    No polls yet, why don't you <a ui-sref="polls.create">create one</a>?
+  </div>
+</section>

@@ -1,0 +1,28 @@
+<section ng-controller="PollsController" ng-init="findOne()">
+  <div class="page-header">
+    <h1>Edit Poll</h1>
+  </div>
+  <div class="col-md-12">
+    <form name="pollsForm" class="form-horizontal" ng-submit="update(pollsForm.$valid)" novalidate>
+      <fieldset>
+        <div class="form-group" show-errors>
+          <label for="title">Title</label>
+          <input name="title" type="text" ng-model="poll.title" id="title" class="form-control" placeholder="Title" required>
+          <div ng-messages="pollsForm.title.$error" role="alert">
+            <p class="help-block error-text" ng-message="required">Article title is required.</p>
+          </div>
+        </div>
+        <div class="form-group" ng-repeat="typ in poll.options">
+          <label for="options{{$index}}">Option </label>
+          <input name="options" ng-model="typ.name" id="options{{$index}}" class="form-control" placeholder="Option">
+          </div>
+        <div class="form-group">
+          <input type="submit" value="Update" class="btn btn-default">
+        </div>
+        <div ng-show="error" class="text-danger">
+          <strong ng-bind="error"></strong>
+        </div>
+      </fieldset>
+    </form>
+  </div>
+</section>
