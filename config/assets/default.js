@@ -6,7 +6,7 @@ module.exports = {
       css: [
         'public/lib/bootstrap/dist/css/bootstrap.css',
         //'public/lib/bootstrap/dist/css/bootstrap-theme.css',
-        'public/lib/bootstrap/dist/css/darkly.min.css',
+        'public/dist/css/darkly.min.css',
         'public/lib/angular-chart.js/dist/angular-chart.css'
       ],
       js: [
