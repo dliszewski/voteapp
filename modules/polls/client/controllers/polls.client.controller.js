@@ -130,7 +130,7 @@ angular.module('polls').controller('PollsController', ['$scope', '$stateParams',
           $scope.data.push(value.votes);
           console.log(value.name + ': ' + value.votes);
         });
-        if (typeof $scope.authentication.user === "string") {
+        if (typeof $scope.authentication.user === 'string') {
           $scope.voted = false;
         } else {
           console.log($scope.poll.voted.indexOf($scope.authentication.user._id));
