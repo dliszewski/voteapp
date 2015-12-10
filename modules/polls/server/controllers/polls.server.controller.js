@@ -57,37 +57,37 @@ exports.update = function (req, res) {
  * Update a poll stat
  */
 exports.updatestat = function (req, res) {
-    var id = req.params.pollId;
-    var optionIndex = req.params.opt;
-    console.log(id+optionIndex);
-    Poll.findById(id, function (err, poll) {
-        if (err) {
-            return res.status(400).send({
-                message: errorHandler.getErrorMessage(err)
-            });
-        }
-        if (!poll) {
-            return res.status(404).send('Not Found');
-        }
-        if(req.user === undefined || req.user === null){
-            poll.options[optionIndex].votes = poll.options[optionIndex].votes + 1;
-        }else{
-            if(poll.voted.indexOf(req.user._id)===-1){
-                poll.voted.push(req.user._id);
-                poll.options[optionIndex].votes = poll.options[optionIndex].votes + 1;
-            }
-        }
+  var id = req.params.pollId;
+  var optionIndex = req.params.opt;
+  console.log(id + optionIndex);
+  Poll.findById(id, function (err, poll) {
+    if (err) {
+      return res.status(400).send({
+        message: errorHandler.getErrorMessage(err)
+      });
+    }
+    if (!poll) {
+      return res.status(404).send('Not Found');
+    }
+    if (req.user === undefined || req.user === null) {
+      poll.options[optionIndex].votes = poll.options[optionIndex].votes + 1;
+    } else {
+      if (poll.voted.indexOf(req.user._id) === -1) {
+        poll.voted.push(req.user._id);
+        poll.options[optionIndex].votes = poll.options[optionIndex].votes + 1;
+      }
+    }
 
-        poll.markModified('options');
-        poll.save(function (err, newPoll) {
-            if (err) {
-                return res.status(400).send({
-                    message: errorHandler.getErrorMessage(err)
-                });
-            }
-            return res.status(200).json(newPoll);
+    poll.markModified('options');
+    poll.save(function (err, newPoll) {
+      if (err) {
+        return res.status(400).send({
+          message: errorHandler.getErrorMessage(err)
         });
+      }
+      return res.status(200).json(newPoll);
     });
+  });
 };
 /**
  * Delete an poll

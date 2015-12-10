@@ -1,20 +1,23 @@
 <section ng-controller="PollsController" ng-init="find()">
-  <div class="page-header">
+    <div class="container">
+  <div class="page-header text-center">
     <h1>Polls</h1>
   </div>
   <div class="list-group">
-    <a ng-repeat="poll in polls" ui-sref="polls.view({pollId: poll._id})" class="list-group-item">
-      <small class="list-group-item-text">
+    <div class="text-center" ng-show="authentication.user._id">
+          <button type="button" class="btn btn-info" ng-click="filters.user._id = authentication.user._id">Show only my polls</button>
+          <button type="button" class="btn btn-success" ng-click="filters.user._id =''">Show all polls</button>
+    </div>
+    <a ng-repeat="poll in polls | filter:filters" ui-sref="polls.view({pollId: poll._id})" class="list-group-item">
+        <h2><span class="glyphicon glyphicon-expand" aria-hidden="true"></span> {{poll.title}}</h2>
         Posted on
-        <span ng-bind="poll.created | date:'mediumDate'"></span>
-        by
+        <span ng-bind="poll.created | date:'mediumDate'"></span><br>
+        Created by
         <span ng-bind="poll.user.displayName"></span>
-      </small>
-      <h4 class="list-group-item-heading" ng-bind="poll.title"></h4>
-      <div ng-repeat="typ in poll.options"><h4>Propozycja {{typ.name}} - {{typ.votes}}</h4></div>
     </a>
   </div>
   <div class="alert alert-warning text-center" ng-if="polls.$resolved && !polls.length">
     No polls yet, why don't you <a ui-sref="polls.create">create one</a>?
+  </div>
   </div>
 </section>

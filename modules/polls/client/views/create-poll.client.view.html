@@ -1,8 +1,9 @@
 <section ng-controller="PollsController">
-  <div class="page-header">
+  <div class="container">
+  <div class="page-header text-center">
     <h1>New Poll</h1>
   </div>
-  <div class="col-md-12">
+  <div class="col-xs-8 col-xs-offset-2">
     <form name="pollForm" class="form-horizontal" ng-submit="create(pollForm.$valid)" novalidate>
       <fieldset>
         <div class="form-group" show-errors>
@@ -12,12 +13,15 @@
             <p class="help-block error-text" ng-message="required">Poll title is required.</p>
           </div>
         </div>
-        <div class="form-group" ng-repeat="choice in choices.type">
-          <label for="options{{$index}}">Content</label>
-          <input name="options" ng-model="choice.name" id="options{{$index}}" class="form-control" placeholder="Option">
+        <div class="form-group" show-errors ng-repeat="choice in choices.type">
+          <label for="options_{{$index}}">Option {{$index+1}}</label>
+          <input name="options_{{$index}}" ng-model="choice.name" id="options_{{$index}}" class="form-control" placeholder="Option" required>
+          <div ng-messages="pollForm['options_' + $index].$error" role="alert">
+            <p class="help-block error-text" ng-message="required">Option is required.</p>
+          </div>
         </div>
         <div class="form-group">
-          <input type="submit" class="btn btn-default">
+          <input type="submit" class="btn btn-default" ng-submit="pollForm.$valid" novalidate>
           <button type="button" class="btn btn-success" ng-click="addNewChoice()">Add option</button>
         </div>
         <div ng-show="error" class="text-danger">
@@ -25,5 +29,6 @@
         </div>
       </fieldset>
     </form>
+  </div>
   </div>
 </section>

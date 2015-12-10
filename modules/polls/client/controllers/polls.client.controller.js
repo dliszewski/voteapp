@@ -6,22 +6,24 @@ angular.module('polls').controller('PollsController', ['$scope', '$stateParams',
     $scope.labels = [];
     $scope.data = [];
     $scope.formData=[];
+    $scope.link=$location.absUrl();
+    $scope.filters='';
 
-    $scope.save2 = function(){
+    $scope.save2 = function () {
       console.log($scope.poll);
-      var t1 =$scope.poll.options[$scope.formData.chickenEgg].votes;
-      $scope.poll.options[$scope.formData.chickenEgg].votes=t1;
+      var t1 = $scope.poll.options[$scope.formData.chickenEgg].votes;
+      $scope.poll.options[$scope.formData.chickenEgg].votes = t1;
       console.log($scope.poll);
-      $http.post('/api/polls/' + $scope.poll._id + '/stat/' + $scope.formData.chickenEgg).success(function(data){
-          console.log(data);
-          $scope.labels =[];
-          $scope.data =[];
-          angular.forEach(data.options, function(value, key) {
-              $scope.labels.push(value.name);
-              $scope.data.push(value.votes);
-              console.log(value.name+ ': ' + value.votes);
-          });
-          $scope.voted=true;
+      $http.post('/api/polls/' + $scope.poll._id + '/stat/' + $scope.formData.chickenEgg).success(function (data) {
+        console.log(data);
+        $scope.labels = [];
+        $scope.data = [];
+        angular.forEach(data.options, function (value, key) {
+          $scope.labels.push(value.name);
+          $scope.data.push(value.votes);
+          console.log(value.name + ': ' + value.votes);
+        });
+        $scope.voted = true;
       });
     };
 
@@ -113,32 +115,32 @@ angular.module('polls').controller('PollsController', ['$scope', '$stateParams',
     // Find a list of Polls
     $scope.find = function () {
       $scope.polls = Polls.query();
-
+      console.log($scope.polls);
     };
 
     // Find existing Poll
     $scope.findOne = function () {
       $scope.poll = Polls.get({
         pollId: $stateParams.pollId
-      },function success(data) {
-        $scope.labels =[];
-        $scope.data =[];
-        angular.forEach(data.options, function(value, key) {
+      }, function success(data) {
+        $scope.labels = [];
+        $scope.data = [];
+        angular.forEach(data.options, function (value, key) {
           $scope.labels.push(value.name);
           $scope.data.push(value.votes);
-          console.log(value.name+ ': ' + value.votes);
+          console.log(value.name + ': ' + value.votes);
         });
-          if(typeof $scope.authentication.user === "string"){
-              $scope.voted=false;
-          }else{
-              console.log( $scope.poll.voted.indexOf($scope.authentication.user._id));
-              console.log($scope.authentication.user._id+' | '+$scope.poll.voted);
-              if( $scope.poll.voted.indexOf($scope.authentication.user._id)===-1){
-                  $scope.voted=false;
-              }else{
-                  $scope.voted=true;
-              }
+        if (typeof $scope.authentication.user === "string") {
+          $scope.voted = false;
+        } else {
+          console.log($scope.poll.voted.indexOf($scope.authentication.user._id));
+          console.log($scope.authentication.user._id + ' | ' + $scope.poll.voted);
+          if ($scope.poll.voted.indexOf($scope.authentication.user._id) === -1) {
+            $scope.voted = false;
+          } else {
+            $scope.voted = true;
           }
+        }
       });
 
     };

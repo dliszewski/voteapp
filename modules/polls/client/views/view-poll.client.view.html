@@ -1,20 +1,29 @@
 <section ng-controller="PollsController" ng-init="findOne()">
-  <div class="page-header">
+    <div class="container">
+  <div class="page-header text-center">
     <h1 ng-bind="poll.title"></h1>
   </div>
-  <div class="pull-right" ng-show="authentication.user._id == poll.user._id">
-    <a class="btn btn-primary" ui-sref="polls.edit({pollId: poll._id})">
-      <i class="glyphicon glyphicon-edit"></i>
-    </a>
-    <a class="btn btn-primary" ng-click="remove();">
-      <i class="glyphicon glyphicon-trash"></i>
-    </a>
+  <div class="row">
+    <div class="col-sm-10 pull-left linkfix" ng-show="authentication.user._id == poll.user._id">
+            Link to share this poll: <a ui-sref="polls.view">{{link}}</a>
+    </div>
+    <div class="col-sm-2 pull-right">
+      <div class="pull-right" ng-show="authentication.user._id == poll.user._id">
+          <a class="btn btn-primary" ui-sref="polls.edit({pollId: poll._id})">
+              <i class="glyphicon glyphicon-edit"></i>
+          </a>
+          <a class="btn btn-primary" ng-click="remove();">
+              <i class="glyphicon glyphicon-trash"></i>
+          </a>
+    </div>
+    </div>
   </div>
+<hr ng-show="authentication.user._id == poll.user._id">
   <small>
     <em class="text-muted">
       Posted on
       <span ng-bind="poll.created | date:'mediumDate'"></span>
-      by
+      Poll created by
       <span ng-bind="poll.user.displayName"></span>
     </em>
   </small>
@@ -28,11 +37,11 @@
             </div>
         </div>
         <div class="text-center">
-            <button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-save"> Save</span></button>
+            <button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-save"> Submit</span></button>
         </div>
     </form>
     <canvas ng-show="voted" id="doughnut" class="chart chart-doughnut"
             chart-data="data" chart-labels="labels" chart-legend="true">
     </canvas>
-
+</div>
 </section>
