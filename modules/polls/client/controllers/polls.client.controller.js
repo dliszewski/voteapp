@@ -10,21 +10,21 @@ angular.module('polls').controller('PollsController', ['$scope', '$stateParams',
     $scope.filters='';
 
     $scope.save2 = function () {
-      console.log($scope.poll);
-      var t1 = $scope.poll.options[$scope.formData.chickenEgg].votes;
-      $scope.poll.options[$scope.formData.chickenEgg].votes = t1;
+      if($scope.formData.chickenEgg){
+      console.log('poszlo');
+      var tv = $scope.poll.options[$scope.formData.chickenEgg].votes;
+      $scope.poll.options[$scope.formData.chickenEgg].votes = tv;
       console.log($scope.poll);
       $http.post('/api/polls/' + $scope.poll._id + '/stat/' + $scope.formData.chickenEgg).success(function (data) {
-        console.log(data);
         $scope.labels = [];
         $scope.data = [];
         angular.forEach(data.options, function (value, key) {
           $scope.labels.push(value.name);
           $scope.data.push(value.votes);
-          console.log(value.name + ': ' + value.votes);
         });
         $scope.voted = true;
       });
+      }
     };
 
 
